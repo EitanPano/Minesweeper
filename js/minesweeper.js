@@ -2,20 +2,26 @@
 // MODEL JS FILE
 
 const MINE = '💣';
-const FLAG = '🚩'
+const FLAG = '🚩';
 
-var gBoard = createBoard(8);
+var gBoardSize = 8;
+var gMinesAmount = 10;
 
-function createBoard(size, bombNum) {
+var gBoard;
+
+;
+function createBoard(boardSize) {
     var board = [];
 
-    for (var i = 0; i < size; i++) {
+    for (var i = 0; i < boardSize; i++) {
         var row = [];
-        for (var j = 0; j < size; j++) {
+        for (var j = 0; j < boardSize; j++) {
             var col = {
                 i,
                 j,
-                status: 'hidden'
+                isRevealed: false,
+                isMarked: false,
+                hasMine: false
             };
             row.push(col);
         }
@@ -24,19 +30,15 @@ function createBoard(size, bombNum) {
     return board;
 }
 
-function genItem(itemName = CHERRY) {
-    var validCells = [];
-    for (var i = 0; i < gBoard.length; i++) {
-        for (var j = 0; j < gBoard[0].length; j++) {
-            var currCell = gBoard[i][j];
-            if (currCell === EMPTY) {
-                validCells.push({ i, j });
-            }
-        }
+function setMines(minesAmount, boardSize) {
+    var currRandomCell;
+    var i = 0;
+    while (i < minesAmount) {
+        currRandomCell = gBoard[getRandomInt(0, boardSize-1)][getRandomInt(0, boardSize-1)];
+        if (currRandomCell.hasMine) continue;
+        currRandomCell.hasMine = true;
+        console.log(currRandomCell);
+        i++
     }
-    if (!validCells.length) return;
-    var randomCell = validCells[getRandomInt(0, validCells.length - 1)];
-    gBoard[randomCell.i][randomCell.j] = CHERRY;
-    renderCell(randomCell, itemName);
 }
 
