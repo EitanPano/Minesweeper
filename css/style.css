@@ -8,15 +8,36 @@ body {
     background-color: rgb(159, 216, 252);
     height: 100%;
     width: 100%;
+    font-family:Arial, Helvetica, sans-serif;
 }
 
-.btn-box {
-    
+h1 {
+font-size: 44px;
+padding: 10px 0;
 }
 
 .btn-box > button {
     height: 40px;
     width: 100px;
+    border-radius: 10px;
+    background-color: rgb(255, 232, 156);
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 15px;
+}
+
+.btn-box > button:hover {
+    background-color: rgb(255, 222, 116);
+}
+
+.time-display {
+    font-size: 24px;
+    background-color: rgb(255, 232, 156);
+    padding: 3px;
+    border: 2px solid black;
+    border-radius: 10px;
+    display: inline-block;
+    margin-bottom: 5px;
 }
 
 .game-board {
@@ -32,9 +53,14 @@ body {
 } */
 
 td {
-    width: 25px;
-    height: 25px;
-    background-color: gainsboro;
+    width: 40px;
+    height: 40px;
+    background-color: rgba(130, 159, 255, 0.692);
+    cursor: crosshair;
+}
+
+td:hover {
+    background-color: rgb(217, 255, 161);
 }
 
 .hidden {
@@ -43,6 +69,9 @@ td {
 }
 
 footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     border-top: 3px solid gray;
     height: 10%;
     width: 100%;

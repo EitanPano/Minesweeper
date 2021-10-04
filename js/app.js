@@ -9,6 +9,7 @@ function init(boardSize = gLevel.SIZE, minesAmount = gLevel.MINES) {
     resetGame(boardSize, minesAmount);
     gBoard = createBoard(boardSize);
     setMines(minesAmount);
+    updateMinesAroundCount(gBoard);
     renderBoard(gBoard);
 }
 // resetGame()
@@ -57,26 +58,24 @@ function cellClicked(el) {
     var cell = gBoard[el.dataset.i][el.dataset.j];
     if (cell.isMarked) return;
     if (cell.isRevealed) return;
-    cell.isRevealed = true;
     // on lose
     if (cell.hasMine) {
+        revealCell({ i: el.dataset.i, j: el.dataset.j });
         el.style.backgroundColor = 'red';
         gameOver();
     }
-    else revealCell(el)
+    else revealCell({ i: el.dataset.i, j: el.dataset.j });
 }
 
-function revealCell(el) {
-    el.style.color = 'initial';
-    el.style.backgroundColor = 'gray';
-    var elPos = {i: parseInt(el.dataset.i), j : parseInt(el.dataset.j)};
-    var nearbyCells = getNearbyCells(gBoard, elPos.i, elPos.j);
-    var mines = scanMines(nearbyCells);
-    if (mines.length === 0) {
-        // Expanding goes here
-        el.innerText = '';
-    }
-    else el.innerText = mines.length;
+function revealCell(pos) {
+    var cell = gBoard[pos.i][pos.j];
+
+    cell.isRevealed = true;
+    var elCell = document.querySelector(`[data-i="${pos.i}"][data-j="${pos.j}"]`);
+    elCell.style.color = 'initial';
+    elCell.style.backgroundColor = 'gray';
+    elCell.innerText = cell.hasMine ? MINE : (cell.minesAround ? cell.minesAround : '');
+
     gGame.shownCount++;
     if (gGame.shownCount === (gLevel.SIZE ** 2) - gLevel.MINES) checkGameOver();
 }
