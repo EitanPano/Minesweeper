@@ -23,21 +23,22 @@ function drawNum() {
     return gNums.splice(getRandomInt(0, gNums.length - 1), 1)[0];
 }
 
-function countNegs(mat, rowIdx, colIdx) {
-    var count = 0;
+function getNearbyCells(mat, rowIdx, colIdx) {
+    var cells = [];
     for (var i = rowIdx - 1; i <= rowIdx + 1; i++) {
         // not outside mat
         if (i < 0 || i > mat.length - 1) continue;
         for (var j = colIdx - 1; j <= colIdx + 1; j++) {
             // not outside mat
             if (j < 0 || j > mat[0].length - 1) continue;
-
             // not on selected pos
             if (i === rowIdx && j === colIdx) continue;
-            if (mat[i][j] === 'X') count++;
+            
+            var currCell = mat[i][j];
+            cells.push(currCell);
         }
     }
-    return count;
+    return cells;
 }
 
 function getRandomColor() {

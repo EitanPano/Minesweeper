@@ -37,8 +37,7 @@ function setMines(minesAmount, boardSize) {
         currRandomCell = gBoard[getRandomInt(0, boardSize-1)][getRandomInt(0, boardSize-1)];
         if (currRandomCell.hasMine) continue;
         currRandomCell.hasMine = true;
-        console.log(currRandomCell);
-        i++
+        i++;
     }
 }
 
