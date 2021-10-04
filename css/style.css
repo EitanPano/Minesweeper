@@ -10,12 +10,22 @@ body {
     width: 100%;
 }
 
+.btn-box {
+    
+}
+
+.btn-box > button {
+    height: 40px;
+    width: 100px;
+}
+
 .game-board {
-    height: 80vh;
+    height: 70vh;
     margin: auto;
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
 }
 /* table {
     margin: auto;

@@ -2,15 +2,16 @@
 // DOM JS FILE
 
 
-function init() {
+function init(boardSize = gLevel.SIZE, minesAmount = gLevel.MINES) {
     // cancel default right click menu
     window.addEventListener("contextmenu", e => e.preventDefault());
 
-    gBoard = createBoard(gBoardSize);
-    setMines(gMinesAmount, gBoardSize);
+    resetGame(boardSize, minesAmount);
+    gBoard = createBoard(boardSize);
+    setMines(minesAmount);
     renderBoard(gBoard);
 }
-
+// resetGame()
 
 function renderBoard(board) {
     var strHTML = '';
@@ -30,23 +31,29 @@ function renderBoard(board) {
 }
 
 function markCell(el) {
-    console.log('right clicked');
+    startTimer();
+    if (!gGame.isOn) return;
     var cell = gBoard[el.dataset.i][el.dataset.j];
     if (cell.isRevealed) return;
 
     if (!cell.isMarked) {
         cell.isMarked = true;
         el.innerText = MARK;
+        gGame.markedCount++;
+        if (gGame.markedCount === gLevel.MINES) checkGameOver();
         el.style.color = 'initial';
     }
     else {
         cell.isMarked = false;
+        gGame.markedCount--
         el.style.color = 'transparent';
         el.innerText = (cell.hasMine) ? MINE : '';
     }
 }
 
 function cellClicked(el) {
+    startTimer();
+    if (!gGame.isOn) return;
     var cell = gBoard[el.dataset.i][el.dataset.j];
     if (cell.isMarked) return;
     if (cell.isRevealed) return;
@@ -57,21 +64,26 @@ function cellClicked(el) {
         gameOver();
     }
     else revealCell(el)
-    console.log(el);
 }
 
 function revealCell(el) {
+    el.style.color = 'initial';
     el.style.backgroundColor = 'gray';
-    var nearbyCells = getNearbyCells(gBoard, el.dataset.i, el.dataset.j);
-    console.log(nearbyCells);
-    var minesArr = [];
-    for (var i = 0; i < nearbyCells.length; i++) {
-        if (nearbyCells[i].hasMine) minesArr.push(nearbyCells[i]);
+    var elPos = {i: parseInt(el.dataset.i), j : parseInt(el.dataset.j)};
+    var nearbyCells = getNearbyCells(gBoard, elPos.i, elPos.j);
+    var mines = scanMines(nearbyCells);
+    if (mines.length === 0) {
+        // Expanding goes here
+        el.innerText = '';
     }
-    console.log(minesArr);
+    else el.innerText = mines.length;
+    gGame.shownCount++;
+    if (gGame.shownCount === (gLevel.SIZE ** 2) - gLevel.MINES) checkGameOver();
 }
 
 function gameOver() {
+    gGame.isOn = false;
+    pauseTimer();
     var elTds = document.querySelectorAll('td');
     for (var i = 0; i < elTds.length; i++) {
         elTds[i].style.color = 'initial';

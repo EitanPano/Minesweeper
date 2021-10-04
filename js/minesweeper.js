@@ -4,13 +4,16 @@
 const MINE = '💣';
 const MARK = '🚩';
 
-var gBoardSize = 8;
-var gMinesAmount = 10;
-
 var gBoard;
+var gLevel = { SIZE: 8, MINES: 12 };
+var gGame = {
+    isOn: false,
+    shownCount: 0,
+    markedCount: 0,
+    secsPassed: 0
+}
 
-;
-function createBoard(boardSize) {
+function createBoard(boardSize = 8) {
     var board = [];
 
     for (var i = 0; i < boardSize; i++) {
@@ -30,14 +33,50 @@ function createBoard(boardSize) {
     return board;
 }
 
-function setMines(minesAmount, boardSize) {
+function setMines(minesAmount) {
     var currRandomCell;
     var i = 0;
     while (i < minesAmount) {
-        currRandomCell = gBoard[getRandomInt(0, boardSize-1)][getRandomInt(0, boardSize-1)];
+        currRandomCell = gBoard[getRandomInt(0, gLevel.SIZE - 1)][getRandomInt(0, gLevel.SIZE - 1)];
         if (currRandomCell.hasMine) continue;
         currRandomCell.hasMine = true;
         i++;
+    }
+}
+
+function scanMines(cells) {
+    var mines = [];
+    for (var i = 0; i < cells.length; i++) {
+        if (cells[i].hasMine) mines.push(cells[i]);
+    }
+    return mines;
+}
+
+function checkGameOver() {
+    var currCell;
+    var revealedMines = [];
+    var revealedNums = [];
+    for (var i = 0; i < gBoard.length; i++) {
+        for (var j = 0; j < gBoard[0].length; j++) {
+            currCell = gBoard[i][j];
+            if (currCell.isRevealed) revealedNums.push(currCell);
+            if (currCell.hasMine && currCell.isMarked) revealedMines.push(currCell);
+        }
+    }
+    if (revealedMines.length === gLevel.MINES &&
+        revealedNums.length === (gLevel.SIZE ** 2) - gLevel.MINES) {
+        gameOver();
+    }
+}
+
+function resetGame(boardSize, minesAmount) {
+    gLevel.SIZE = boardSize;
+    gLevel.MINES = minesAmount;
+    resetTimer()
+    gGame = {
+        isOn: false,
+        shownCount: 0,
+        markedCount: 0,
     }
 }
 

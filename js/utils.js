@@ -33,7 +33,6 @@ function getNearbyCells(mat, rowIdx, colIdx) {
             if (j < 0 || j > mat[0].length - 1) continue;
             // not on selected pos
             if (i === rowIdx && j === colIdx) continue;
-            
             var currCell = mat[i][j];
             cells.push(currCell);
         }
@@ -54,4 +53,54 @@ function getRandomInt(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+// STOPWATCH https://codepen.io/bnsddk/pen/pojMGGN
+function timeToString(time) {
+    var diffInHrs = time / 3600000;
+    var hh = Math.floor(diffInHrs);
+
+    var diffInMin = (diffInHrs - hh) * 60;
+    var mm = Math.floor(diffInMin);
+
+    var diffInSec = (diffInMin - mm) * 60;
+    var ss = Math.floor(diffInSec);
+
+    var diffInMs = (diffInSec - ss) * 100;
+    var ms = Math.floor(diffInMs);
+
+    var formattedMM = mm.toString().padStart(2, "0");
+    var formattedSS = ss.toString().padStart(2, "0");
+    var formattedMS = ms.toString().padStart(2, "0");
+
+    return `${formattedMM}:${formattedSS}:${formattedMS}`;
+}
+
+var startTime;
+var elapsedTime = 0;
+var gTimerInterval;
+
+function print(txt) {
+    document.querySelector(".time-display").innerText = txt;
+}
+
+function startTimer() {
+    if (gTimerInterval) return;
+    gGame.isOn = true;
+    startTime = Date.now() - elapsedTime;
+    gTimerInterval = setInterval(function printTime() {
+        elapsedTime = Date.now() - startTime;
+        print(timeToString(elapsedTime));
+    }, 10);
+}
+
+function pauseTimer() {
+    clearInterval(gTimerInterval);
+}
+
+function resetTimer() {
+    clearInterval(gTimerInterval);
+    print("00:00:00");
+    elapsedTime = 0;
+    gTimerInterval = 0;
 }

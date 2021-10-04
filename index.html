@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,18 +8,30 @@
     <link rel="stylesheet" href="css/style.css">
     <title>Minesweeper</title>
 </head>
+
 <body onload="init()">
+
     <h1>MineSweeper</h1>
+    <div class="btn-box">
+        <button onclick="init(4,2)">Beginner</button>
+        <button onclick="init(8,12)">Medium</button>
+        <button onclick="init(12,30)">Expert</button>
+    </div>
 
     <div class="game-board">
+        <p>
+            <span class="time-display">00:00:00</span>
+        </p>
         <table>
-            
+
         </table>
     </div>
 
-<footer>&copy Coffeerights 2021 Eitan Pano. All rights reserved.</footer>
+    <footer>&copy Coffeerights 2021 Eitan Pano. All rights reserved.</footer>
+
     <script src="js/utils.js"></script>
     <script src="js/minesweeper.js"></script>
     <script src="js/app.js"></script>
 </body>
+
 </html>
