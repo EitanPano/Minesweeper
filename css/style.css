@@ -27,6 +27,11 @@ td {
     background-color: gainsboro;
 }
 
+.hidden {
+    color: transparent;
+    /* color: initial; */
+}
+
 footer {
     border-top: 3px solid gray;
     height: 10%;

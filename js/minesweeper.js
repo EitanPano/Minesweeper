@@ -2,7 +2,7 @@
 // MODEL JS FILE
 
 const MINE = '💣';
-const FLAG = '🚩';
+const MARK = '🚩';
 
 var gBoardSize = 8;
 var gMinesAmount = 10;
