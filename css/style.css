@@ -1,0 +1,22 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    text-align: center;
+}
+
+body {
+    background-color: rgb(159, 216, 252);
+    height: 100%;
+    width: 100%;
+}
+
+footer {
+    border-top: 3px solid gray;
+    height: 10%;
+    width: 100%;
+    color: aliceblue;
+    background-color: rgb(76, 98, 131);
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
