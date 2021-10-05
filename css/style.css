@@ -19,13 +19,21 @@ h1 {
 .btn-leader-board {
     position: absolute;
     top: 2%;
-    left: 2%;
+    left: 5%;
     width: 80px;
     height: 80px;
     font-size: 45px;
     border-radius: 50%;
-    background-color: rgba(255, 255, 255, 0.700);
+    background-color: rgb(255, 168, 54);
+    box-shadow: 0 5px 0 0 rgba(165, 108, 32, 0.753);
+    border: 2px solid aliceblue;
 }
+
+.btn-leader-board:active {
+    top: 2.5%;
+    box-shadow: none;
+    transition: 100ms ease;
+  }
 
 .leader-board {
     height: 180px;
@@ -39,11 +47,32 @@ h1 {
     box-shadow: 0 0 3px 3px rgba(130, 159, 255, 0.692);
     position: absolute;
     top: 11%;
-    left: 2%;
+    left: 5%;
     font-weight: bold;
     border-radius: 20px;
     visibility: hidden;
 }
+
+.btn-safe-click {
+    position: absolute;
+    top: 2%;
+    right: 5%;
+    width: 80px;
+    height: 80px;
+    font-size: 17px;
+    border-radius: 50%;
+    background-color: rgb(26, 182, 255);
+    border: 2px solid aliceblue;
+    box-shadow: 0 5px 0 0 rgba(17, 105, 146, 0.678);
+    font-weight: bold;
+    color: aliceblue;
+}
+
+.btn-safe-click:active {
+    top: 2.5%;
+    box-shadow: none;
+    transition: 100ms ease;
+  }
 
 .btn-box > button {
     height: 40px;
@@ -188,6 +217,19 @@ footer {
         width: 40px;
         height: 40px;
         font-size: 19px;
+    }
+    .btn-leader-board:active {
+        top: 1.2%;
+      }
+    .btn-safe-click {
+        top: 0.5%;
+        right: 0.5%;
+        width: 40px;
+        height: 40px;
+        font-size: 9px;
+    }
+    .btn-safe-click:active {
+        top: 1.2%;
     }
     .leader-board {
         font-size: 16px;

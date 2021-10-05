@@ -12,6 +12,7 @@ var gGame;
 var gIsFirstClick = true;
 var gFirstCellPos;
 var gHintTimeOut;
+var gSafeClickTimeOut;
 
 function createBoard(boardSize = 8) {
     var board = [];
@@ -63,11 +64,11 @@ function checkGameOver() {
     }
     if (gGame.shownCount === (gLevel.SIZE ** 2) - gLevel.MINES &&
         gGame.markedCount === gLevel.MINES) {
-            elSmiley.innerText = '😎';
-            gameOver();
-            saveTime(gCurrentDifficulty);
-            checkBestTime(gCurrentDifficulty);
-        }
+        elSmiley.innerText = '😎';
+        gameOver();
+        saveTime(gCurrentDifficulty);
+        checkBestTime(gCurrentDifficulty);
+    }
 }
 
 function checkCell(i, j) {
@@ -125,8 +126,8 @@ function resetGame(boardSize, minesAmount) {
         markedCount: 0,
         livesCount: 3,
         isHintOn: false,
-        hintsCount: 3
-
+        hintsCount: 3,
+        safeClicks: 3
     }
     gIsFirstClick = true;
     elLives.innerText = '💖💖💖';
@@ -134,7 +135,28 @@ function resetGame(boardSize, minesAmount) {
     elHints.innerText = '💡💡💡';
 }
 
+function findSafeClick() {
+    if (gSafeClickTimeOut) return;
+    var currRandomCell;
+    var i = 0;
+    while (i < 1) {
+        currRandomCell = gBoard[getRandomInt(0, gLevel.SIZE - 1)][getRandomInt(0, gLevel.SIZE - 1)];
+        if (currRandomCell.hasMine || currRandomCell.isRevealed || currRandomCell.isMarked) continue;
+        var elCell = document.querySelector(`[data-i="${currRandomCell.i}"][data-j="${currRandomCell.j}"]`);
+        console.log(elCell);
+        elCell.style.color = 'initial';
+        elCell.style.backgroundColor = 'rgb(110, 209, 255)';
+        i++;
+    }
+    gSafeClickTimeOut = setTimeout(() => {
+        elCell.style.color = 'transparent';
+        elCell.style.backgroundColor = 'rgba(130, 159, 255, 0.692)';
+        gSafeClickTimeOut = null;
+    }, 3000)
+}
+
 function toggleHint() {
+    if (gHintTimeOut) return;
     if (!gGame.isOn) return;
     gGame.isHintOn = (!gGame.isHintOn) ? true : false;
     elHints.classList.toggle('hints-aura');
@@ -142,6 +164,7 @@ function toggleHint() {
 }
 
 function HintNextClick(board, row, col) {
+    if (gHintTimeOut) return;
     for (var i = row - 1; i <= row + 1; i++) {
         if (i < 0 || i >= board.length) continue;
         for (var j = col - 1; j <= col + 1; j++) {
@@ -181,4 +204,5 @@ function hideHints(board, row, col) {
             elCell.style.backgroundColor = 'rgba(130, 159, 255, 0.692)';
         }
     }
+    gHintTimeOut = null;
 }

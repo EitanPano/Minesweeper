@@ -71,7 +71,7 @@ function cellClicked(el) {
         toggleHint();
         renderHints();
         gHintTimeOut = setTimeout(() => {
-            hideHints(gBoard, +el.dataset.i, +el.dataset.j)
+            hideHints(gBoard, +el.dataset.i, +el.dataset.j);
         }, 1000);
     }
     else checkCell(el.dataset.i, el.dataset.j);
@@ -132,10 +132,4 @@ function gameOver() {
     gGame.isOn = false;
     pauseTimer();
 
-}
-
-// STILL UNUSED
-function updateScore(diff) {
-    gGame.score += diff;
-    document.querySelector('h2 span').innerText = gGame.score;
 }
