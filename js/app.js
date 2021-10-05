@@ -9,10 +9,10 @@ function init(boardSize = gLevel.SIZE, minesAmount = gLevel.MINES) {
     resetGame(boardSize, minesAmount);
     gBoard = createBoard(boardSize);
     setMines(minesAmount);
-    updateMinesAroundCount(gBoard);
+    updateCellMinesAround(gBoard);
     renderBoard(gBoard);
 }
-// resetGame()
+
 
 function renderBoard(board) {
     var strHTML = '';
@@ -32,7 +32,8 @@ function renderBoard(board) {
 }
 
 function markCell(el) {
-    startTimer();
+    if (gIsFirstClick) startTimer();
+ 
     if (!gGame.isOn) return;
     var cell = gBoard[el.dataset.i][el.dataset.j];
     if (cell.isRevealed) return;
@@ -53,32 +54,43 @@ function markCell(el) {
 }
 
 function cellClicked(el) {
-    startTimer();
+    if (gIsFirstClick) startTimer();
+    
     if (!gGame.isOn) return;
+    // setMines(gLevel.MINES);
+    // updateCellMinesAround(gBoard);
+
     var cell = gBoard[el.dataset.i][el.dataset.j];
     if (cell.isMarked) return;
     if (cell.isRevealed) return;
     // on lose
     if (cell.hasMine) {
-        revealCell({ i: el.dataset.i, j: el.dataset.j });
-        el.style.backgroundColor = 'red';
-        gameOver();
+    revealCell({ i: el.dataset.i, j: el.dataset.j });
+    el.style.backgroundColor = 'red';
+    gameOver();
     }
-    else revealCell({ i: el.dataset.i, j: el.dataset.j });
+    if (!cell.isRevealed) {
+        checkCell(el.dataset.i, el.dataset.j);
+        if (gGame.shownCount === (gLevel.SIZE ** 2) - gLevel.MINES) checkGameOver();
+    }
 }
 
 function revealCell(pos) {
     var cell = gBoard[pos.i][pos.j];
+    var elCell = document.querySelector(`[data-i="${pos.i}"][data-j="${pos.j}"]`);
 
     cell.isRevealed = true;
-    var elCell = document.querySelector(`[data-i="${pos.i}"][data-j="${pos.j}"]`);
-    elCell.style.color = 'initial';
     elCell.style.backgroundColor = 'gray';
-    elCell.innerText = cell.hasMine ? MINE : (cell.minesAround ? cell.minesAround : '');
+    if (cell.minesAround === 1) elCell.style.color = 'rgb(0, 0, 220)';
+    if (cell.minesAround === 2) elCell.style.color = 'rgb(0, 220, 100)';
+    if (cell.minesAround === 3) elCell.style.color = 'rgb(220, 0, 0)';
 
-    gGame.shownCount++;
-    if (gGame.shownCount === (gLevel.SIZE ** 2) - gLevel.MINES) checkGameOver();
+
+
+    elCell.innerText = cell.hasMine ? MINE : (cell.minesAround ? cell.minesAround : '');
 }
+
+
 
 function gameOver() {
     gGame.isOn = false;

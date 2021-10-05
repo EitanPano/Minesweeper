@@ -51,12 +51,14 @@ padding: 10px 0;
 /* table {
     margin: auto;
 } */
-
 td {
     width: 40px;
     height: 40px;
     background-color: rgba(130, 159, 255, 0.692);
     cursor: crosshair;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
 }
 
 td:hover {

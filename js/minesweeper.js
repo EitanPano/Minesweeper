@@ -10,8 +10,8 @@ var gGame = {
     isOn: false,
     shownCount: 0,
     markedCount: 0,
-    secsPassed: 0
 }
+var gIsFirstClick = true;
 
 function createBoard(boardSize = 8) {
     var board = [];
@@ -79,9 +79,10 @@ function resetGame(boardSize, minesAmount) {
         shownCount: 0,
         markedCount: 0,
     }
+    gIsFirstClick = true;
 }
 
-function updateMinesAroundCount(board) {
+function updateCellMinesAround(board) {
     for (var i = 0; i < board.length; i++) {
         for (var j = 0; j < board[0].length; j++) {
             var cell = board[i][j];
@@ -101,4 +102,27 @@ function getNegMinesCount(board, row, col) {
         }
     }
     return count;
+}
+
+function checkCell(i, j) {
+    var cell = gBoard[i][j];
+    if (!cell.isRevealed) {
+        revealCell({ i, j });
+        if (!cell.hasMine) gGame.shownCount++;
+        if (!cell.minesAround && !cell.hasMine) {
+            expandRevealing(i, j);
+        }
+    }
+}
+
+function expandRevealing(row, col) {
+    for (var i = row - 1; i <= row + 1; i++) {
+        if (i < 0 || i >= gBoard.length) continue;
+        for (var j = col - 1; j <= col + 1; j++) {
+            if (j < 0 || j >= gBoard[0].length) continue;
+            if (i === row && j === col) continue;
+            if (gBoard[i][j].hasMine) continue;
+            checkCell(i, j);
+        }
+    }
 }

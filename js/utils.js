@@ -68,8 +68,8 @@ function print(txt) {
 }
 
 function startTimer() {
-    if (gTimerInterval) return;
     gGame.isOn = true;
+    gIsFirstClick = false;
     startTime = Date.now() - elapsedTime;
     gTimerInterval = setInterval(function printTime() {
         elapsedTime = Date.now() - startTime;
