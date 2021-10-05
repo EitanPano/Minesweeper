@@ -1,8 +1,9 @@
 'use strict';
 // DOM JS FILE
 
-var elLives = document.querySelector('.lives-display span');
 var elSmiley = document.querySelector('.smiley');
+var elHints = document.querySelector('.hints-display span');
+var elLives = document.querySelector('.lives-display span');
 
 
 function init(boardSize = gLevel.SIZE, minesAmount = gLevel.MINES) {
@@ -63,7 +64,15 @@ function cellClicked(el) {
     var cell = gBoard[el.dataset.i][el.dataset.j];
     if (cell.isMarked) return;
 
-    checkCell(el.dataset.i, el.dataset.j);
+    if (gGame.isHintOn) {
+        HintNextClick(gBoard, +el.dataset.i, +el.dataset.j);
+        toggleHint();
+        renderHints();
+        gHintTimeOut = setTimeout(() => {
+            hideHints(gBoard, +el.dataset.i, +el.dataset.j)
+        }, 1000);
+    }
+    else checkCell(el.dataset.i, el.dataset.j);
     checkGameOver();
 }
 

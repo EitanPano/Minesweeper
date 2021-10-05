@@ -11,6 +11,7 @@ var gLevel = { SIZE: 8, MINES: 12 };
 var gGame;
 var gIsFirstClick = true;
 var gFirstCellPos;
+var gHintTimeOut;
 
 function createBoard(boardSize = 8) {
     var board = [];
@@ -128,6 +129,14 @@ function resetGame(boardSize, minesAmount) {
     gIsFirstClick = true;
     elLives.innerText = '💖💖💖';
     elSmiley.innerText = '😀';
+    elHints.innerText = '💡💡💡';
+}
+
+function toggleHint() {
+    if (!gGame.isOn) return;
+    gGame.isHintOn = (!gGame.isHintOn) ? true : false;
+    elHints.classList.toggle('hints-aura');
+    console.log(gGame.isHintOn);
 }
 
 function HintNextClick(board, row, col) {
@@ -135,8 +144,39 @@ function HintNextClick(board, row, col) {
         if (i < 0 || i >= board.length) continue;
         for (var j = col - 1; j <= col + 1; j++) {
             if (j < 0 || j >= board[0].length) continue;
-            // hint functionality
+            var cell = board[i][j];
+            if (cell.isRevealed) continue;
 
+            var elCell = document.querySelector(`[data-i="${i}"][data-j="${j}"]`);
+            elCell.style.color = 'initial';
+            elCell.style.backgroundColor = 'lightgreen';
+            if (cell.hasMine) elCell.innerText = MINE;
+            else if (cell.minesAround) elCell.innerText = cell.minesAround;
+
+        }
+    }
+    gGame.hintsCount--;
+}
+
+function renderHints() {
+    var strHintsHTML = ''
+    for (var i = 0; i < gGame.hintsCount; i++) {
+        strHintsHTML += '💡'
+    }
+    elHints.innerText = strHintsHTML;
+}
+
+function hideHints(board, row, col) {
+    for (var i = row - 1; i <= row + 1; i++) {
+        if (i < 0 || i >= board.length) continue;
+        for (var j = col - 1; j <= col + 1; j++) {
+            if (j < 0 || j >= board[0].length) continue;
+            var cell = board[i][j];
+            if (cell.isRevealed) continue;
+
+            var elCell = document.querySelector(`[data-i="${i}"][data-j="${j}"]`);
+            elCell.style.color = 'transparent';
+            elCell.style.backgroundColor = 'rgba(130, 159, 255, 0.692)';
         }
     }
 }
