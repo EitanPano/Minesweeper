@@ -12,6 +12,7 @@ var gGame = {
     markedCount: 0,
 }
 var gIsFirstClick = true;
+var gFirstCellPos;
 
 function createBoard(boardSize = 8) {
     var board = [];
@@ -39,7 +40,10 @@ function setMines(minesAmount) {
     var i = 0;
     while (i < minesAmount) {
         currRandomCell = gBoard[getRandomInt(0, gLevel.SIZE - 1)][getRandomInt(0, gLevel.SIZE - 1)];
+        console.log(currRandomCell);
         if (currRandomCell.hasMine) continue;
+        if (currRandomCell.i === gFirstCellPos.i &&
+            currRandomCell.j === gFirstCellPos.j) continue;
         currRandomCell.hasMine = true;
         i++;
     }

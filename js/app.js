@@ -8,8 +8,8 @@ function init(boardSize = gLevel.SIZE, minesAmount = gLevel.MINES) {
 
     resetGame(boardSize, minesAmount);
     gBoard = createBoard(boardSize);
-    setMines(minesAmount);
-    updateCellMinesAround(gBoard);
+    // setMines(minesAmount);
+    // updateCellMinesAround(gBoard);
     renderBoard(gBoard);
 }
 
@@ -32,8 +32,8 @@ function renderBoard(board) {
 }
 
 function markCell(el) {
-    if (gIsFirstClick) startTimer();
- 
+    if (gIsFirstClick) startGame([el.dataset.i], [el.dataset.j]);
+
     if (!gGame.isOn) return;
     var cell = gBoard[el.dataset.i][el.dataset.j];
     if (cell.isRevealed) return;
@@ -54,25 +54,31 @@ function markCell(el) {
 }
 
 function cellClicked(el) {
-    if (gIsFirstClick) startTimer();
-    
+    if (gIsFirstClick) startGame(el.dataset.i, el.dataset.j);
     if (!gGame.isOn) return;
-    // setMines(gLevel.MINES);
-    // updateCellMinesAround(gBoard);
 
     var cell = gBoard[el.dataset.i][el.dataset.j];
     if (cell.isMarked) return;
-    if (cell.isRevealed) return;
+    // if (cell.isRevealed) return;
     // on lose
     if (cell.hasMine) {
-    revealCell({ i: el.dataset.i, j: el.dataset.j });
-    el.style.backgroundColor = 'red';
-    gameOver();
+        revealCell({ i: el.dataset.i, j: el.dataset.j });
+        el.style.backgroundColor = 'red';
+        gameOver();
     }
     if (!cell.isRevealed) {
         checkCell(el.dataset.i, el.dataset.j);
         if (gGame.shownCount === (gLevel.SIZE ** 2) - gLevel.MINES) checkGameOver();
     }
+}
+
+function startGame(i, j) {
+    gGame.isOn = true;
+    gIsFirstClick = false;
+    startTimer();
+    gFirstCellPos = { i: +i, j: +j };
+    setMines(gLevel.MINES);
+    updateCellMinesAround(gBoard);
 }
 
 function revealCell(pos) {
