@@ -1,6 +1,8 @@
 'use strict';
 // DOM JS FILE
 
+var elLives = document.querySelector('.lives-display span');
+
 
 function init(boardSize = gLevel.SIZE, minesAmount = gLevel.MINES) {
     // cancel default right click menu
@@ -59,17 +61,9 @@ function cellClicked(el) {
 
     var cell = gBoard[el.dataset.i][el.dataset.j];
     if (cell.isMarked) return;
-    // if (cell.isRevealed) return;
-    // on lose
-    if (cell.hasMine) {
-        revealCell({ i: el.dataset.i, j: el.dataset.j });
-        el.style.backgroundColor = 'red';
-        gameOver();
-    }
-    if (!cell.isRevealed) {
-        checkCell(el.dataset.i, el.dataset.j);
-        if (gGame.shownCount === (gLevel.SIZE ** 2) - gLevel.MINES) checkGameOver();
-    }
+
+    checkCell(el.dataset.i, el.dataset.j);
+    checkGameOver();
 }
 
 function startGame(i, j) {
@@ -84,19 +78,31 @@ function startGame(i, j) {
 function revealCell(pos) {
     var cell = gBoard[pos.i][pos.j];
     var elCell = document.querySelector(`[data-i="${pos.i}"][data-j="${pos.j}"]`);
-
     cell.isRevealed = true;
+    if (cell.hasMine) mineStep(elCell);
+    else numStep(cell, elCell);
+}
+
+function mineStep(elCell) {
+    gGame.markedCount++;
+    gGame.lives--;
+    elCell.innerText = MINE;
+    elCell.style.backgroundColor = 'red';
+    elCell.style.color = 'initial';
+    var strLivesHTML = '';
+    for (var i = 0; i < gGame.lives; i++) {
+        strLivesHTML += '💖';
+    }
+    elLives.innerText = strLivesHTML;
+}
+
+function numStep(cell, elCell) {
     elCell.style.backgroundColor = 'gray';
     if (cell.minesAround === 1) elCell.style.color = 'rgb(0, 0, 220)';
     if (cell.minesAround === 2) elCell.style.color = 'rgb(0, 220, 100)';
     if (cell.minesAround === 3) elCell.style.color = 'rgb(220, 0, 0)';
-
-
-
-    elCell.innerText = cell.hasMine ? MINE : (cell.minesAround ? cell.minesAround : '');
+    elCell.innerText = cell.minesAround ? cell.minesAround : '';
 }
-
-
 
 function gameOver() {
     gGame.isOn = false;
