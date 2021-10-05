@@ -171,7 +171,7 @@ function HintNextClick(board, row, col) {
         for (var j = col - 1; j <= col + 1; j++) {
             if (j < 0 || j >= board[0].length) continue;
             var cell = board[i][j];
-            if (cell.isRevealed) continue;
+            if (cell.isRevealed || cell.isMarked) continue;
 
             var elCell = document.querySelector(`[data-i="${i}"][data-j="${j}"]`);
             elCell.style.color = 'initial';
@@ -198,7 +198,7 @@ function hideHints(board, row, col) {
         for (var j = col - 1; j <= col + 1; j++) {
             if (j < 0 || j >= board[0].length) continue;
             var cell = board[i][j];
-            if (cell.isRevealed) continue;
+            if (cell.isRevealed || cell.isMarked) continue;
 
             var elCell = document.querySelector(`[data-i="${i}"][data-j="${j}"]`);
             elCell.style.color = 'transparent';
