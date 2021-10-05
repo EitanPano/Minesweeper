@@ -11,18 +11,25 @@
 
 <body onload="init()">
 
-    <h1>MineSweeper</h1>
-    <div class="btn-box">
+    <h1 onclick="closeLeaderBoard()">MineSweeper</h1>
+    <button class="btn-leader-board" onclick="openLeaderBoard()">🏆</button>
+    <div class="leader-board visibility-toggle">
+        <p>Beginner Best Time - <span class="beginner">00:00:00</span></p>
+        <p>Medium Best Time - <span class="medium">00:00:00</span></p>
+        <p>Expert Best Time - <span class="expert">00:00:00</span></p>
+    </div>
+
+    <div class="btn-box" onclick="closeLeaderBoard()">
         <button onclick="init(4,2)">Beginner</button>
         <button onclick="init(8,12)">Medium</button>
         <button onclick="init(12,30)">Expert</button>
     </div>
 
-    <div class="game-board">
+    <div class="game-board" onclick="closeLeaderBoard()">
         <div class="smiley" onclick="init()">😀</div>
         <div class="info-box">
             <p class="hints-display"><span onclick="toggleHint()">💡💡💡</span></p>
-            <p class="time-display"00:00:00></p>
+            <p class="time-display"></p>
             <p class="lives-display"><span>💖💖💖</span></p>
         </div>
         <table>
@@ -35,6 +42,7 @@
     <script src="js/utils.js"></script>
     <script src="js/minesweeper.js"></script>
     <script src="js/app.js"></script>
+    <script src="js/storage.js"></script>
 </body>
 
 </html>

@@ -16,6 +16,35 @@ h1 {
     padding: 1%;
 }
 
+.btn-leader-board {
+    position: absolute;
+    top: 2%;
+    left: 2%;
+    width: 80px;
+    height: 80px;
+    font-size: 45px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.700);
+}
+
+.leader-board {
+    height: 180px;
+    width: 300px;
+    background-color: rgba(240, 248, 255, 0.800);
+    font-size: 18px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    box-shadow: 0 0 3px 3px rgba(130, 159, 255, 0.692);
+    position: absolute;
+    top: 11%;
+    left: 2%;
+    font-weight: bold;
+    border-radius: 20px;
+    visibility: hidden;
+}
+
 .btn-box > button {
     height: 40px;
     width: 100px;
@@ -24,6 +53,7 @@ h1 {
     cursor: pointer;
     font-weight: bold;
     font-size: 15px;
+    margin: 0 5px;
 }
 
 .btn-box > button:hover {
@@ -58,7 +88,7 @@ h1 {
     justify-content: space-around;
     align-items: center;
     width: 90%;
-    max-width: 1000px;
+    max-width: 500px;
     margin-bottom: 2%;
 }
 
@@ -151,6 +181,19 @@ footer {
 @media screen and (max-width: 480px)  {
     h1 {
         font-size: 36px;
+    }
+    .btn-leader-board {
+        top: 0.5%;
+        left: 0.5%;
+        width: 40px;
+        height: 40px;
+        font-size: 19px;
+    }
+    .leader-board {
+        font-size: 16px;
+        width: 280px;
+        left: calc(50% - 140px);
+        top: 5%;
     }
     .game-board {
         margin-top: 4%;

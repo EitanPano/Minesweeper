@@ -65,6 +65,8 @@ function checkGameOver() {
         gGame.markedCount === gLevel.MINES) {
             elSmiley.innerText = '😎';
             gameOver();
+            saveTime(gCurrentDifficulty);
+            checkBestTime(gCurrentDifficulty);
         }
 }
 
