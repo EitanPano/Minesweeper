@@ -55,9 +55,16 @@ function scanMines(cells) {
 }
 
 function checkGameOver() {
-    if (gGame.lives === 0) gameOver();
+    if (gGame.livesCount === 0) {
+        elSmiley.innerText = '😭';
+        revealMines();
+        gameOver();
+    }
     if (gGame.shownCount === (gLevel.SIZE ** 2) - gLevel.MINES &&
-        gGame.markedCount === gLevel.MINES) gameOver();
+        gGame.markedCount === gLevel.MINES) {
+            elSmiley.innerText = '😎';
+            gameOver();
+        }
 }
 
 function checkCell(i, j) {
@@ -113,8 +120,23 @@ function resetGame(boardSize, minesAmount) {
         isOn: false,
         shownCount: 0,
         markedCount: 0,
-        lives: 3
+        livesCount: 3,
+        isHintOn: false,
+        hintsCount: 3
+
     }
     gIsFirstClick = true;
-    elLives.innerText = '💖💖💖'
+    elLives.innerText = '💖💖💖';
+    elSmiley.innerText = '😀';
+}
+
+function HintNextClick(board, row, col) {
+    for (var i = row - 1; i <= row + 1; i++) {
+        if (i < 0 || i >= board.length) continue;
+        for (var j = col - 1; j <= col + 1; j++) {
+            if (j < 0 || j >= board[0].length) continue;
+            // hint functionality
+
+        }
+    }
 }

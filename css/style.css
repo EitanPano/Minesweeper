@@ -30,51 +30,74 @@ padding: 1%;
     background-color: rgb(255, 222, 116);
 }
 
+.game-board {
+    height: 70vh;
+    width: 100%;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.smiley {
+    font-size: 30px;
+    background-color: rgba(240, 248, 255, 0.685);
+    padding: 3px 3px 5px;
+    margin-bottom: 15px;
+    border-radius: 25%;
+    cursor: pointer;
+}
+
+.smiley:hover {
+    background-color: aliceblue;
+}
+
 .info-box {
     display: flex;
     justify-content: space-around;
     align-items: center;
     width: 90%;
+    max-width: 1000px;
     margin-bottom: 2%;
 }
 
+.hint-display {
+    width: 30%;
+    padding: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    font-weight: bold;
+    color: aliceblue;
+    border-radius: 15px;
+}
+
 .time-display {
-    /* height: 40px;
-    width: 150px; */
+    width: 30%;
+    max-width: 160px;
     padding: 5px;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 24px;
     background-color: rgb(255, 232, 156);
-    /* padding: 3px; */
     border: 2px solid black;
     border-radius: 10px;
-
 }
 
 .lives-display {
-    width: 180px;
+    width: 30%;
+
     padding: 5px;
     display: flex;
-    /* justify-content: center; */
+    justify-content: center;
     align-items: center;
     font-size: 24px;
     font-weight: bold;
     color: aliceblue;
-    /* background-color: rgba(240, 248, 255, 0.616); */
     border-radius: 15px;
-    /* padding: 3px; */
-    /* box-shadow: 0 0 10px 1px aliceblue; */
-}
-
-.game-board {
-    height: 70vh;
-    margin: auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
 }
 
 td {
@@ -83,7 +106,7 @@ td {
     background-color: rgba(130, 159, 255, 0.692);
     cursor: crosshair;
     border-radius: 5px;
-    font-size: 16px;
+    font-size: 17px;
     font-weight: bold;
 }
 
@@ -93,7 +116,6 @@ td:hover {
 
 .hidden {
     color: transparent;
-    /* color: initial; */
 }
 
 footer {
@@ -111,18 +133,32 @@ footer {
 }
 
 @media screen and (max-width: 480px)  {
-    td {
-        height: 24px;
-        width: 24px;
+    h1 {
+        font-size: 36px;
+    }
+    .game-board {
+        margin-top: 4%;
     }
     .btn-box > button {
         height: 30px;
         width: 80px;
+    }
+    .smiley {
+        padding: 0 0 3px;
+        margin: 3px 0 0;
+    }
+    .info-box {
+        margin: 0;
     }
     .time-display {
         font-size: 18px;
     }
     .lives-display {
         font-size: 18px;
+    }
+    td {
+        height: 24px;
+        width: 24px;
+        font-size: 16px;
     }
 }
