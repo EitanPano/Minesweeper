@@ -5,7 +5,6 @@ const MINE = '💣';
 const MARK = '🚩';
 const LIVES = '💖'
 
-
 var gBoard;
 var gLevel = { SIZE: 8, MINES: 12 };
 var gGame;
@@ -136,7 +135,7 @@ function resetGame(boardSize, minesAmount) {
 }
 
 function findSafeClick() {
-    if (gSafeClickTimeOut) return;
+    if (gSafeClickTimeOut || !gGame.safeClicks) return;
     var currRandomCell;
     var i = 0;
     while (i < 1) {
@@ -148,6 +147,8 @@ function findSafeClick() {
         elCell.style.backgroundColor = 'rgb(110, 209, 255)';
         i++;
     }
+    gGame.safeClicks--;
+    document.querySelector('.btn-safe-click span').innerText = 'x'+gGame.safeClicks;
     gSafeClickTimeOut = setTimeout(() => {
         elCell.style.color = 'transparent';
         elCell.style.backgroundColor = 'rgba(130, 159, 255, 0.692)';

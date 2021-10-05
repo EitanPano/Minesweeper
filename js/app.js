@@ -6,8 +6,6 @@ var elHints = document.querySelector('.hints-display span');
 var elLives = document.querySelector('.lives-display span');
 var elTime = document.querySelector('.time-display');
 
-
-
 function init(boardSize = gLevel.SIZE, minesAmount = gLevel.MINES) {
     // cancel default right click menu
     window.addEventListener("contextmenu", e => e.preventDefault());
@@ -18,7 +16,6 @@ function init(boardSize = gLevel.SIZE, minesAmount = gLevel.MINES) {
     renderBoard(gBoard);
     getDifficulty();
 }
-
 
 function renderBoard(board) {
     var strHTML = '';
