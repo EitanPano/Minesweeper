@@ -382,3 +382,9 @@ footer {
         margin-top: 35px;
     }
 }
+
+@media screen and (max-height: 800px) {
+    /* .game-board {
+        margin-top: 35px;
+    } */
+}
