@@ -388,6 +388,9 @@ footer {
         padding: 0;
         margin: 0;
     }
+    .game-board {
+        margin-top: 3vh;
+    }
     .info-box {
         margin: 0 0 10px;
     }
