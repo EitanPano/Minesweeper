@@ -133,7 +133,7 @@ function renderLives() {
 }
 
 function numStep(cell, elCell) {
-    elCell.style.backgroundColor = 'gray';
+    elCell.style.backgroundColor = 'rgba(61, 61, 61, 0.6)';
     if (cell.minesAround === 1) elCell.style.color = 'rgb(0, 0, 220)';
     if (cell.minesAround === 2) elCell.style.color = 'rgb(0, 220, 100)';
     if (cell.minesAround === 3) elCell.style.color = 'rgb(220, 0, 0)';

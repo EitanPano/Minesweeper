@@ -13,12 +13,12 @@ function getEmptyCells(board) {
 }
 
 function hoverIn(el) {
-    if (gBoard[el.dataset.i][el.dataset.j].isRevealed) return;
-    el.style.backgroundColor = 'rgb(205, 255, 135, 0.700)' 
+    if (gBoard[el.dataset.i][el.dataset.j].isRevealed || gHintTimeOut) return;
+    el.style.backgroundColor = 'rgb(190, 255, 135, 0.8)' 
 }
 function hoverOut(el) {
-    if (gBoard[el.dataset.i][el.dataset.j].isRevealed) return;
-    el.style.backgroundColor = 'rgba(130, 160, 255, 0.700)' 
+    if (gBoard[el.dataset.i][el.dataset.j].isRevealed || gHintTimeOut) return;
+    el.style.backgroundColor = 'rgba(160, 120, 100, 0.8)' 
 }
 
 // location such as: {i: 2, j: 7}
@@ -32,7 +32,7 @@ function renderCell(pos) {
     else {
 
         elCell.style.color = 'transparent';
-        elCell.style.backgroundColor = 'rgba(130, 160, 255, 0.700)';
+        elCell.style.backgroundColor = 'rgba(160, 120, 100, 0.8)';
     }
 }
 

@@ -1,17 +1,5 @@
 'use strict';
 
-// gGame = {
-//     isOn: false,
-//     shownCount: 0,
-//     markedCount: 0,
-//     livesCount: 3,
-//     isHintOn: false,
-//     hintsCount: 3,
-//     safeClicks: 3,
-//     isFirstClick : true
-// };
-
-
 function undoStamp() {
     if (sessionStorage.getItem('timeStamps') === null) {
         console.log('Undo button works after first click');

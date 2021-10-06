@@ -200,14 +200,14 @@ function findSafeClick() {
         var elCell = document.querySelector(`[data-i="${currRandomCell.i}"][data-j="${currRandomCell.j}"]`);
         console.log(elCell);
         elCell.style.color = 'initial';
-        elCell.style.backgroundColor = 'rgb(110, 209, 255)';
+        elCell.style.backgroundColor = 'rgb(110, 255, 190)';
         i++;
     }
     gGame.safeClicks--;
     elSafeClickSpan.innerText = 'x' + gGame.safeClicks;
     gSafeClickTimeOut = setTimeout(() => {
         elCell.style.color = 'transparent';
-        elCell.style.backgroundColor = 'rgba(130, 159, 255, 0.692)';
+        elCell.style.backgroundColor = 'rgba(160, 120, 100, 0.8)';
         gSafeClickTimeOut = null;
     }, 3000)
 }
@@ -217,7 +217,6 @@ function toggleHint() {
     if (!gGame.isOn) return;
     gGame.isHintOn = (!gGame.isHintOn) ? true : false;
     elHints.classList.toggle('hints-aura');
-    console.log(gGame.isHintOn);
 }
 
 function HintNextClick(board, row, col) {
@@ -258,7 +257,7 @@ function hideHints(board, row, col) {
 
             var elCell = document.querySelector(`[data-i="${i}"][data-j="${j}"]`);
             elCell.style.color = 'transparent';
-            elCell.style.backgroundColor = 'rgba(130, 159, 255, 0.692)';
+            elCell.style.backgroundColor = 'rgba(160, 120, 100, 0.8)';
         }
     }
     gHintTimeOut = null;
