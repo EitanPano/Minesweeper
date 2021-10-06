@@ -36,9 +36,9 @@ function getBestTimes() {
     var beginnerTime = JSON.parse(localStorage.getItem('Beginner'));
     if (beginnerTime) elBeginnerTime.innerText = beginnerTime;
     var mediumTime = JSON.parse(localStorage.getItem('Medium'));
-    if (mediumTime) elBeginnerTime.innerText = mediumTime;
+    if (mediumTime) elMediumTime.innerText = mediumTime;
     var expertTime = JSON.parse(localStorage.getItem('Expert'));
-    if (expertTime) elBeginnerTime.innerText = expertTime;
+    if (expertTime) elExpertTime.innerText = expertTime;
 }
 
 function saveTime(difficulty) {

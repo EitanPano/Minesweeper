@@ -53,10 +53,29 @@ h1 {
     visibility: hidden;
 }
 
-.btn-safe-click {
+.game-modes {
+    /* background-color: white; */
+    height: 260px;
     position: absolute;
     top: 2%;
     right: 5%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.game-modes button {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    padding: 0;
+    border: 2px solid aliceblue;
+}
+
+.btn-safe-click {
+    position: absolute;
+    top: 12%;
+    right: 60%;
     width: 80px;
     height: 80px;
     font-size: 17px;
@@ -212,10 +231,21 @@ footer {
     }
     .btn-leader-board:active {
         top: 1.2%;
-      }
-    .btn-safe-click {
+    }
+    .game-modes {
         top: 0.5%;
         right: 0.5%;
+        height: 23.5%;
+    }
+    .game-modes button {
+        width: 40px;
+        height: 40px;
+        font-size: 9px;
+        box-shadow: 0 5px 0 0 gray;
+    }
+    .btn-safe-click {
+        top: 15%;
+        right: 65%;
         width: 40px;
         height: 40px;
         font-size: 9px;

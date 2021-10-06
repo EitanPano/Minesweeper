@@ -8,16 +8,20 @@ var elTime = document.querySelector('.time-display');
 var elSafeClickSpan = document.querySelector('.btn-safe-click span');
 var elManualBtnSpan = document.querySelector('.manual-mode span');
 
-function init(boardSize = gLevel.SIZE, minesAmount = gLevel.MINES, manualMode = false) {
+function init(boardSize = gLevel.SIZE, minesAmount = gLevel.MINES,
+    manualMode = false, boom7mode = false) {
     window.addEventListener("contextmenu", e => e.preventDefault());
     getBestTimes();
     sessionStorage.clear();
-     
+
     gIsManualMode = manualMode;
+    gIs7BoomMode = boom7mode;
     resetGame(boardSize, minesAmount);
     gBoard = createBoard(boardSize);
     renderBoard(gBoard);
     getDifficulty();
+
+    if (boom7mode) setMines7Boom();
 }
 
 function renderBoard(board) {
@@ -96,7 +100,7 @@ function startGame(i, j) {
     gGame.isOn = true;
     gGame.isFirstClick = false;
     startTimer();
-    if (!gIsManualMode) {
+    if (!gIsManualMode && !gIs7BoomMode) {
         gFirstCellPos = { i: +i, j: +j };
         setMinesRandom(gLevel.MINES);
     }

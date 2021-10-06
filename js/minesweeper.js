@@ -13,6 +13,8 @@ var gHintTimeOut;
 var gSafeClickTimeOut;
 
 var gIsManualMode = false;
+var gIs7BoomMode = false;
+var g7BoomCount = 0;
 var gManualMineSetCount = gLevel.MINES;
 
 function createBoard(boardSize = 8) {
@@ -37,9 +39,22 @@ function createBoard(boardSize = 8) {
 }
 
 function playManualMode() {
-    init(gLevel.SIZE, gLevel.MINES, true);
+    switch (gLevel.SIZE) {
+        case 4: gLevel.MINES = 2;
+        break;
+        case 8: gLevel.MINES = 12;
+        break;
+        case 12: gLevel.MINES = 30;
+        break;
+    }
+    init(gLevel.SIZE, gLevel.MINES, true, false);
     gManualMineSetCount = gLevel.MINES;
     elManualBtnSpan.innerText = 'x' + gManualMineSetCount;
+}
+
+function play7BoomMode() {
+    // elManualBtnSpan.innerText = gLevel.MINES;
+    init(gLevel.SIZE, g7BoomCount, false, true);
 }
 
 function setManualMine(i, j) {
@@ -51,6 +66,24 @@ function setManualMine(i, j) {
     gManualMineSetCount--;
     elManualBtnSpan.innerText = 'x' + gManualMineSetCount;
     if (gManualMineSetCount === 0) elManualBtnSpan.innerText = 'Go';
+}
+
+
+function setMines7Boom() {
+    var boomCount = 1;
+    var minesCount = 0;
+    var cell;
+    for (var i = 0; i < gBoard.length; i++) {
+        for (var j = 0; j < gBoard[0].length; j++) {
+            cell = gBoard[i][j];
+            if (boomCount % 7 === 0 || (boomCount + '').includes(7)) {
+                cell.hasMine = true;
+                minesCount++;
+            }
+            boomCount++;
+        }
+    }
+    g7BoomCount = minesCount;
 }
 
 function setMinesRandom(minesAmount) {
@@ -137,7 +170,8 @@ function getNegMinesCount(board, row, col) {
 function resetGame(boardSize, minesAmount) {
     gLevel.SIZE = boardSize;
     gLevel.MINES = minesAmount;
-    gManualMineSetCount = gLevel.MINES;
+    // g7BoomCount = 0;
+    // gManualMineSetCount = gLevel.MINES;
     resetTimer();
     gGame = {
         isOn: false,
@@ -147,12 +181,12 @@ function resetGame(boardSize, minesAmount) {
         isHintOn: false,
         hintsCount: 3,
         safeClicks: 3,
-        isFirstClick : true
+        isFirstClick: true
     };
     elLives.innerText = '💖💖💖';
     elSmiley.innerText = '😀';
     elHints.innerText = '💡💡💡';
-    elManualBtnSpan.innerText = 'x' + gManualMineSetCount;
+    elManualBtnSpan.innerText = '';
 }
 
 function findSafeClick() {
