@@ -1,5 +1,10 @@
 'use strict';
-// DOM JS FILE
+
+var laughSound = new Audio('../sfx/collect.wav');
+var victorySound = new Audio('../sfx/victory.wav');
+var byebyeSound = new Audio('../sfx/byebye.wav');
+var ouchSound = new Audio('../sfx/ouch.wav');
+var bummerSound = new Audio('../sfx/bummer.wav');
 
 var elSmiley = document.querySelector('.smiley');
 var elHints = document.querySelector('.hints-display span');
@@ -10,6 +15,7 @@ var elManualBtnSpan = document.querySelector('.manual-mode span');
 
 function init(boardSize = gLevel.SIZE, minesAmount = gLevel.MINES,
     manualMode = false, boom7mode = false) {
+
     window.addEventListener("contextmenu", e => e.preventDefault());
     getBestTimes();
     sessionStorage.clear();
@@ -22,6 +28,7 @@ function init(boardSize = gLevel.SIZE, minesAmount = gLevel.MINES,
     getDifficulty();
 
     if (boom7mode) setMines7Boom();
+    
 }
 
 function renderBoard(board) {
@@ -123,7 +130,8 @@ function mineStep(elCell) {
     elCell.innerText = MINE;
     elCell.style.backgroundColor = 'red';
     elCell.style.color = 'initial';
-    renderLives()
+    renderLives();
+    if (gGame.livesCount !== 0) ouchSound.play();
 }
 
 function renderLives() {

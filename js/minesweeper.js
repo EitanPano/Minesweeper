@@ -1,9 +1,8 @@
 'use strict';
-// MODEL JS FILE
 
 const MINE = '💣';
 const MARK = '🚩';
-const LIVES = '💖'
+const LIVES = '💖';
 
 var gBoard;
 var gLevel = { SIZE: 8, MINES: 12 };
@@ -41,11 +40,11 @@ function createBoard(boardSize = 8) {
 function playManualMode() {
     switch (gLevel.SIZE) {
         case 4: gLevel.MINES = 2;
-        break;
+            break;
         case 8: gLevel.MINES = 12;
-        break;
+            break;
         case 12: gLevel.MINES = 30;
-        break;
+            break;
     }
     init(gLevel.SIZE, gLevel.MINES, true, false);
     gManualMineSetCount = gLevel.MINES;
@@ -53,8 +52,8 @@ function playManualMode() {
 }
 
 function play7BoomMode() {
-    // elManualBtnSpan.innerText = gLevel.MINES;
     init(gLevel.SIZE, g7BoomCount, false, true);
+    bummerSound.play();
 }
 
 function setManualMine(i, j) {
@@ -65,9 +64,11 @@ function setManualMine(i, j) {
     gBoard[i][j].hasMine = true;
     gManualMineSetCount--;
     elManualBtnSpan.innerText = 'x' + gManualMineSetCount;
-    if (gManualMineSetCount === 0) elManualBtnSpan.innerText = 'Go';
+    if (gManualMineSetCount === 0) {
+        elManualBtnSpan.innerText = 'Go';
+        laughSound.play();
+    }
 }
-
 
 function setMines7Boom() {
     var boomCount = 1;
@@ -112,6 +113,7 @@ function checkGameOver() {
         elSmiley.innerText = '😭';
         revealMines();
         gameOver();
+        byebyeSound.play();
     }
     if (gGame.shownCount === (gLevel.SIZE ** 2) - gLevel.MINES &&
         gGame.markedCount === gLevel.MINES) {
@@ -119,6 +121,7 @@ function checkGameOver() {
         gameOver();
         saveTime(gCurrentDifficulty);
         checkBestTime(gCurrentDifficulty);
+        victorySound.play();
     }
 }
 
