@@ -13,6 +13,9 @@ var gFirstCellPos;
 var gHintTimeOut;
 var gSafeClickTimeOut;
 
+var gIsManualMode = false;
+var gManualMineSetCount = gLevel.MINES;
+
 function createBoard(boardSize = 8) {
     var board = [];
 
@@ -34,7 +37,24 @@ function createBoard(boardSize = 8) {
     return board;
 }
 
-function setMines(minesAmount) {
+function playManualMode() {
+    init(gLevel.SIZE, gLevel.MINES, true);
+    gManualMineSetCount = gLevel.MINES;
+    elManualBtnSpan.innerText = 'x' + gManualMineSetCount;
+}
+
+function setManualMine(i, j) {
+    if (gBoard[i][j].hasMine) {
+        alert('You already placed a 💣 here');
+        return;
+    }
+    gBoard[i][j].hasMine = true;
+    gManualMineSetCount--;
+    elManualBtnSpan.innerText = 'x' + gManualMineSetCount;
+    if (gManualMineSetCount === 0) elManualBtnSpan.innerText = 'Go';
+}
+
+function setMinesRandom(minesAmount) {
     var currRandomCell;
     var i = 0;
     while (i < minesAmount) {
@@ -118,7 +138,8 @@ function expandRevealing(row, col) {
 function resetGame(boardSize, minesAmount) {
     gLevel.SIZE = boardSize;
     gLevel.MINES = minesAmount;
-    resetTimer()
+    gManualMineSetCount = gLevel.MINES;
+    resetTimer();
     gGame = {
         isOn: false,
         shownCount: 0,
@@ -127,11 +148,12 @@ function resetGame(boardSize, minesAmount) {
         isHintOn: false,
         hintsCount: 3,
         safeClicks: 3
-    }
+    };
     gIsFirstClick = true;
     elLives.innerText = '💖💖💖';
     elSmiley.innerText = '😀';
     elHints.innerText = '💡💡💡';
+    elManualBtnSpan.innerText = 'x' + gManualMineSetCount;
 }
 
 function findSafeClick() {
@@ -148,7 +170,7 @@ function findSafeClick() {
         i++;
     }
     gGame.safeClicks--;
-    document.querySelector('.btn-safe-click span').innerText = 'x'+gGame.safeClicks;
+    document.querySelector('.btn-safe-click span').innerText = 'x' + gGame.safeClicks;
     gSafeClickTimeOut = setTimeout(() => {
         elCell.style.color = 'transparent';
         elCell.style.backgroundColor = 'rgba(130, 159, 255, 0.692)';
@@ -178,16 +200,15 @@ function HintNextClick(board, row, col) {
             elCell.style.backgroundColor = 'lightgreen';
             if (cell.hasMine) elCell.innerText = MINE;
             else if (cell.minesAround) elCell.innerText = cell.minesAround;
-
         }
     }
     gGame.hintsCount--;
 }
 
 function renderHints() {
-    var strHintsHTML = ''
+    var strHintsHTML = '';
     for (var i = 0; i < gGame.hintsCount; i++) {
-        strHintsHTML += '💡'
+        strHintsHTML += '💡';
     }
     elHints.innerText = strHintsHTML;
 }

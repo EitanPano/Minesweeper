@@ -5,12 +5,13 @@ var elSmiley = document.querySelector('.smiley');
 var elHints = document.querySelector('.hints-display span');
 var elLives = document.querySelector('.lives-display span');
 var elTime = document.querySelector('.time-display');
+var elManualBtnSpan = document.querySelector('.manual-mode span');
 
-function init(boardSize = gLevel.SIZE, minesAmount = gLevel.MINES) {
-    // cancel default right click menu
+function init(boardSize = gLevel.SIZE, minesAmount = gLevel.MINES, manualMode = false) {
     window.addEventListener("contextmenu", e => e.preventDefault());
     getBestTimes();
-
+     
+    gIsManualMode = manualMode;
     resetGame(boardSize, minesAmount);
     gBoard = createBoard(boardSize);
     renderBoard(gBoard);
@@ -35,7 +36,12 @@ function renderBoard(board) {
 }
 
 function markCell(el) {
-    if (gIsFirstClick) startGame([el.dataset.i], [el.dataset.j]);
+    if (gIsManualMode) {
+        if (gManualMineSetCount !== 0) {
+            return;
+        }
+    }
+    if (gIsFirstClick) startGame(el.dataset.i, el.dataset.j);
 
     if (!gGame.isOn) return;
     var cell = gBoard[el.dataset.i][el.dataset.j];
@@ -50,13 +56,19 @@ function markCell(el) {
     }
     else {
         cell.isMarked = false;
-        gGame.markedCount--
+        gGame.markedCount--;
         el.style.color = 'transparent';
         el.innerText = (cell.hasMine) ? MINE : '';
     }
 }
 
 function cellClicked(el) {
+    if (gIsManualMode) {
+        if (gManualMineSetCount !== 0) {
+            setManualMine(el.dataset.i, el.dataset.j);
+            return;
+        }
+    }
     if (gIsFirstClick) startGame(el.dataset.i, el.dataset.j);
     if (!gGame.isOn) return;
 
@@ -79,8 +91,10 @@ function startGame(i, j) {
     gGame.isOn = true;
     gIsFirstClick = false;
     startTimer();
-    gFirstCellPos = { i: +i, j: +j };
-    setMines(gLevel.MINES);
+    if (!gIsManualMode) {
+        gFirstCellPos = { i: +i, j: +j };
+        setMinesRandom(gLevel.MINES);
+    }
     updateCellMinesAround(gBoard);
 }
 
