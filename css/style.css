@@ -176,19 +176,11 @@ h1 {
 td {
     width: 40px;
     height: 40px;
-    background-color: rgba(130, 159, 255, 0.692);
+    background-color: rgba(130, 160, 255, 0.700);
     cursor: crosshair;
     border-radius: 5px;
     font-size: 17px;
     font-weight: bold;
-}
-
-td:hover {
-    background-color: rgb(217, 255, 161);
-}
-
-.hidden {
-    color: transparent;
 }
 
 footer {
@@ -209,7 +201,7 @@ footer {
 
 @media screen and (max-width: 480px)  {
     h1 {
-        font-size: 36px;
+        font-size: 33px;
     }
     .btn-leader-board {
         top: 0.5%;

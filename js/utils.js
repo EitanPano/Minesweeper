@@ -12,11 +12,28 @@ function getEmptyCells(board) {
     return emptyCells
 }
 
+function hoverIn(el) {
+    if (gBoard[el.dataset.i][el.dataset.j].isRevealed) return;
+    el.style.backgroundColor = 'rgb(205, 255, 135, 0.700)' 
+}
+function hoverOut(el) {
+    if (gBoard[el.dataset.i][el.dataset.j].isRevealed) return;
+    el.style.backgroundColor = 'rgba(130, 160, 255, 0.700)' 
+}
+
 // location such as: {i: 2, j: 7}
-function renderCell(location, value) {
+function renderCell(pos) {
     // Select the elCell and set the value
-    var elCell = document.querySelector(`.cell${location.i}-${location.j}`)
-    elCell.innerHTML = value
+    var elCell = document.querySelector(`[data-i="${pos.i}"][data-j="${pos.j}"]`);
+    if (gBoard[pos.i][pos.j].isMarked) {
+        elCell.style.color = 'initial';
+        elCell.innerText = MARK;
+    }
+    else {
+
+        elCell.style.color = 'transparent';
+        elCell.style.backgroundColor = 'rgba(130, 160, 255, 0.700)';
+    }
 }
 
 function drawNum() {

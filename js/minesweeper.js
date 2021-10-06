@@ -8,7 +8,6 @@ const LIVES = '💖'
 var gBoard;
 var gLevel = { SIZE: 8, MINES: 12 };
 var gGame;
-var gIsFirstClick = true;
 var gFirstCellPos;
 var gHintTimeOut;
 var gSafeClickTimeOut;
@@ -101,6 +100,18 @@ function checkCell(i, j) {
     }
 }
 
+function expandRevealing(row, col) {
+    for (var i = row - 1; i <= row + 1; i++) {
+        if (i < 0 || i >= gBoard.length) continue;
+        for (var j = col - 1; j <= col + 1; j++) {
+            if (j < 0 || j >= gBoard[0].length) continue;
+            if (i === row && j === col) continue;
+            if (gBoard[i][j].hasMine || gBoard[i][j].isMarked) continue;
+            checkCell(i, j);
+        }
+    }
+}
+
 function updateCellMinesAround(board) {
     for (var i = 0; i < board.length; i++) {
         for (var j = 0; j < board[0].length; j++) {
@@ -123,18 +134,6 @@ function getNegMinesCount(board, row, col) {
     return count;
 }
 
-function expandRevealing(row, col) {
-    for (var i = row - 1; i <= row + 1; i++) {
-        if (i < 0 || i >= gBoard.length) continue;
-        for (var j = col - 1; j <= col + 1; j++) {
-            if (j < 0 || j >= gBoard[0].length) continue;
-            if (i === row && j === col) continue;
-            if (gBoard[i][j].hasMine || gBoard[i][j].isMarked) continue;
-            checkCell(i, j);
-        }
-    }
-}
-
 function resetGame(boardSize, minesAmount) {
     gLevel.SIZE = boardSize;
     gLevel.MINES = minesAmount;
@@ -147,9 +146,9 @@ function resetGame(boardSize, minesAmount) {
         livesCount: 3,
         isHintOn: false,
         hintsCount: 3,
-        safeClicks: 3
+        safeClicks: 3,
+        isFirstClick : true
     };
-    gIsFirstClick = true;
     elLives.innerText = '💖💖💖';
     elSmiley.innerText = '😀';
     elHints.innerText = '💡💡💡';
@@ -157,7 +156,8 @@ function resetGame(boardSize, minesAmount) {
 }
 
 function findSafeClick() {
-    if (gSafeClickTimeOut || !gGame.safeClicks) return;
+    if (gSafeClickTimeOut || !gGame.safeClicks || !gGame.isOn) return;
+    saveTimeStamp(null, gGame);
     var currRandomCell;
     var i = 0;
     while (i < 1) {
@@ -170,7 +170,7 @@ function findSafeClick() {
         i++;
     }
     gGame.safeClicks--;
-    document.querySelector('.btn-safe-click span').innerText = 'x' + gGame.safeClicks;
+    elSafeClickSpan.innerText = 'x' + gGame.safeClicks;
     gSafeClickTimeOut = setTimeout(() => {
         elCell.style.color = 'transparent';
         elCell.style.backgroundColor = 'rgba(130, 159, 255, 0.692)';
@@ -188,6 +188,7 @@ function toggleHint() {
 
 function HintNextClick(board, row, col) {
     if (gHintTimeOut) return;
+    saveTimeStamp(null, gGame);
     for (var i = row - 1; i <= row + 1; i++) {
         if (i < 0 || i >= board.length) continue;
         for (var j = col - 1; j <= col + 1; j++) {

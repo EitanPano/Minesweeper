@@ -5,11 +5,13 @@ var elSmiley = document.querySelector('.smiley');
 var elHints = document.querySelector('.hints-display span');
 var elLives = document.querySelector('.lives-display span');
 var elTime = document.querySelector('.time-display');
+var elSafeClickSpan = document.querySelector('.btn-safe-click span');
 var elManualBtnSpan = document.querySelector('.manual-mode span');
 
 function init(boardSize = gLevel.SIZE, minesAmount = gLevel.MINES, manualMode = false) {
     window.addEventListener("contextmenu", e => e.preventDefault());
     getBestTimes();
+    sessionStorage.clear();
      
     gIsManualMode = manualMode;
     resetGame(boardSize, minesAmount);
@@ -24,7 +26,8 @@ function renderBoard(board) {
         strHTML += `<tr>`;
         for (var j = 0; j < board[0].length; j++) {
             strHTML += `<td
-            class= "hidden"
+            onmouseover="hoverIn(this)"
+            onmouseout="hoverOut(this)"
             data-i="${i}" data-j="${j}"
             onclick="cellClicked(this)"
             oncontextmenu="markCell(this)"
@@ -41,13 +44,14 @@ function markCell(el) {
             return;
         }
     }
-    if (gIsFirstClick) startGame(el.dataset.i, el.dataset.j);
+    if (gGame.isFirstClick) startGame(el.dataset.i, el.dataset.j);
 
     if (!gGame.isOn) return;
     var cell = gBoard[el.dataset.i][el.dataset.j];
     if (cell.isRevealed) return;
 
     if (!cell.isMarked) {
+        saveTimeStamp(cell, gGame);
         cell.isMarked = true;
         el.innerText = MARK;
         gGame.markedCount++;
@@ -55,6 +59,7 @@ function markCell(el) {
         checkGameOver();
     }
     else {
+        saveTimeStamp(cell, gGame);
         cell.isMarked = false;
         gGame.markedCount--;
         el.style.color = 'transparent';
@@ -69,7 +74,7 @@ function cellClicked(el) {
             return;
         }
     }
-    if (gIsFirstClick) startGame(el.dataset.i, el.dataset.j);
+    if (gGame.isFirstClick) startGame(el.dataset.i, el.dataset.j);
     if (!gGame.isOn) return;
 
     var cell = gBoard[el.dataset.i][el.dataset.j];
@@ -89,7 +94,7 @@ function cellClicked(el) {
 
 function startGame(i, j) {
     gGame.isOn = true;
-    gIsFirstClick = false;
+    gGame.isFirstClick = false;
     startTimer();
     if (!gIsManualMode) {
         gFirstCellPos = { i: +i, j: +j };
@@ -101,6 +106,8 @@ function startGame(i, j) {
 function revealCell(pos) {
     var cell = gBoard[pos.i][pos.j];
     var elCell = document.querySelector(`[data-i="${pos.i}"][data-j="${pos.j}"]`);
+    // save cell && game state to session
+    saveTimeStamp(cell, gGame);
     cell.isRevealed = true;
     if (cell.hasMine) mineStep(elCell);
     else numStep(cell, elCell);
@@ -112,7 +119,10 @@ function mineStep(elCell) {
     elCell.innerText = MINE;
     elCell.style.backgroundColor = 'red';
     elCell.style.color = 'initial';
+    renderLives()
+}
 
+function renderLives() {
     var strLivesHTML = '';
     for (var i = 0; i < gGame.livesCount; i++) strLivesHTML += '💖';
     elLives.innerText = strLivesHTML;
