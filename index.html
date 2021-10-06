@@ -20,8 +20,7 @@
     </div>
 
     <button class="btn-leader-board" onclick="openLeaderBoard()" title="Open Leaderboards">🏆</button>
-    <button class="btn-safe-click" onclick="findSafeClick()" title="Reveals a Safe Cell">Safe
-        Click<br><span>x3</span></button>
+
     <div class="leader-board visibility-toggle">
         <p>Beginner Best Time - <span class="beginner">00:00:00</span></p>
         <p>Medium Best Time - <span class="medium">00:00:00</span></p>
@@ -37,7 +36,11 @@
     <div class="game-board" onclick="closeLeaderBoard()">
         <div class="smiley" onclick="init()">😀</div>
         <div class="info-box">
-            <p class="hints-display"><span onclick="toggleHint()">💡💡💡</span></p>
+            <div class="use-box">
+                <button class="btn-safe-click" onclick="findSafeClick()" title="Reveals a Safe Cell">Safe
+                    Click<br><span>x3</span></button>
+                <button class="hints-display" onclick="toggleHint()"><span>💡💡💡</span></button>
+            </div>
             <p class="time-display"></p>
             <p class="lives-display"><span>💖💖💖</span></p>
         </div>
