@@ -265,3 +265,7 @@ function hideHints(board, row, col) {
     }
     gHintTimeOut = null;
 }
+
+function playEasy() { init(4, 2); }
+function playMedium() { init(8, 12); }
+function playExpert() { init(12, 30); }
