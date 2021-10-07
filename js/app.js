@@ -1,10 +1,10 @@
 'use strict';
 
-var laughSound = new Audio('../sfx/collect.wav');
-var victorySound = new Audio('../sfx/victory.wav');
-var byebyeSound = new Audio('../sfx/byebye.wav');
-var ouchSound = new Audio('../sfx/ouch.wav');
-var bummerSound = new Audio('../sfx/bummer.wav');
+var laughSound = new Audio('sfx/collect.wav');
+var victorySound = new Audio('sfx/victory.wav');
+var byebyeSound = new Audio('sfx/byebye.wav');
+var ouchSound = new Audio('sfx/ouch.wav');
+var bummerSound = new Audio('sfx/bummer.wav');
 
 var elSmiley = document.querySelector('.smiley');
 var elHints = document.querySelector('.hints-display span');

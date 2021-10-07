@@ -294,6 +294,40 @@ footer {
     left: 0;
     font-weight: bold;
 }
+
+
+@media screen and (max-height: 910px) {
+    .game-board {
+        margin-top: 35px;
+    }
+}
+
+@media screen and (max-height: 800px) {
+    .smiley {
+        padding: 0;
+        margin: 0;
+    }
+    .game-board {
+        margin-top: 3vh;
+    }
+    .info-box {
+        margin: 0 0 10px;
+    }
+    .use-box > button {
+        font-size: 12px;
+        width: 7vh;
+        height: 7vh;
+    }
+    .use-box > button > span {
+        font-size: 16px;
+    }
+    td {
+        height: 4.5vh;
+        width: 4.5vh;
+        font-size: 18px;
+    }
+}
+
 @media screen and (max-width: 700px) {
     .game-modes {
         right: 1%;
@@ -374,37 +408,5 @@ footer {
     }
     footer {
         font-size: 14px;
-    }
-}
-
-@media screen and (max-height: 910px) {
-    .game-board {
-        margin-top: 35px;
-    }
-}
-
-@media screen and (max-height: 800px) {
-    .smiley {
-        padding: 0;
-        margin: 0;
-    }
-    .game-board {
-        margin-top: 3vh;
-    }
-    .info-box {
-        margin: 0 0 10px;
-    }
-    .use-box > button {
-        font-size: 12px;
-        width: 7vh;
-        height: 7vh;
-    }
-    .use-box > button > span {
-        font-size: 16px;
-    }
-    td {
-        height: 4.5vh;
-        width: 4.5vh;
-        font-size: 18px;
     }
 }
