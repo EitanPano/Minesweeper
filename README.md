@@ -1,2 +1,7 @@
 # Minesweeper
-Coding Academy 1st Sprint
+
+One of my first logic-based broweser game.
+
+https://eitanpano.github.io/Minesweeper/
+
+GL, HF
